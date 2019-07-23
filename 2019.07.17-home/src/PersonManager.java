@@ -1,27 +1,61 @@
 /*todo
-реализовать через arraylist
-3 arraylist
+реализовать через ArrayList
+3 ArrayList: id,name,age
 */
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.*;
 
 public class PersonManager implements IManager {
+    private ArrayList<Person> idList;
+    private ArrayList<Person> ageList;
+    private ArrayList<Person> nameList;
+    private ArrayList<Person> persons;
 
-    private Person[] persons;
-    private Person[] personsByName;
-    private int count;
-    private Comparator<Person> byNameComp;
+    private Comparator<Person> compById;
+    private Comparator<Person> compByAge;
+    private Comparator<Person> compByName;
+
+    private int count = 0;
 
     public PersonManager() {
-        persons = new Person[10];
-        personsByName = new Person[10];
-        count = 0;
-        byNameComp = (o1, o2) -> {
-            int res = o1.getName().compareTo(o2.getName());
+        persons = new ArrayList<>(10);
+        idList = new ArrayList<>(10);
+        ageList = new ArrayList<>(10);
+        nameList = new ArrayList<>(10);
+        compById = (p1, p2) -> {
+            int res = Integer.compare(p1.getId(), p2.getId());
+            return res;
+        };
+        compByAge = (p1, p2) -> {
+            int res = Integer.compare(p1.getAge(), p2.getAge());
+            return res;
+        };
+        compByName = (p1, p2) -> {
+            int res = p1.getName().compareTo(p2.getName());
             if (res == 0) {
-                res = Integer.compare(o1.getId(), o2.getId());
+                res = Integer.compare(p1.getId(), p2.getId());
+            }
+            return res;
+        };
+    }
+
+    public PersonManager(List<Person> list) {
+        persons = new ArrayList<>(list);
+        idList = new ArrayList<>(list);
+        ageList = new ArrayList<>(list);
+        nameList = new ArrayList<>(list);
+        compById = (p1, p2) -> {
+            int res = Integer.compare(p1.getId(), p2.getId());
+            return res;
+        };
+        compByAge = (p1, p2) -> {
+            int res = Integer.compare(p1.getAge(), p2.getAge());
+            return res;
+        };
+        compByName = (p1, p2) -> {
+            int res = p1.getName().compareTo(p2.getName());
+            if (res == 0) {
+                res = Integer.compare(p1.getId(), p2.getId());
             }
             return res;
         };
@@ -32,58 +66,33 @@ public class PersonManager implements IManager {
         if (person == null) {
             return false;
         }
-        if (count == persons.length) {
-//            Person[] tmp = Arrays.copyOf(persons, persons.length * 2);
-//            persons = tmp;
-            persons = Arrays.copyOf(persons, persons.length * 2);
-            personsByName = Arrays.copyOf(personsByName, personsByName.length * 2);
-        }
-        int indx = indexOf(person);
-//        if (indx < 0) {
-//            persons[count++] = person;
-//            persons = getAllPersonsById();
-//            return true;
-//        }
-//        return false;
-        if (indx >= 0) {
+        if (person.getId() < 0) {
             return false;
         }
-//        indx = -indx - 1;
-        indx = ~indx;//специальная битовая операция, заменяющая -indx-1
-        for (int i = count; i > indx; i--) {
-            persons[i] = persons[i - 1];
+        if (person.getAge() < 0) {
+            return false;
         }
-        persons[indx] = person;
-        indx = ~Arrays.binarySearch(personsByName, 0, count, byNameComp);
-        for(int i=count;i>indx;i--){
-            personsByName[i] = personsByName[i - 1];
+        if (idList.contains(person)) {
+            return false;
         }
+        persons.add(person);
+        idList.add(person);
+        getAllPersonsById();
+        ageList.add(person);
+        getAllPersonsByAge();
+        nameList.add(person);
+        getAllPersonsByName();
         count++;
         return true;
-
-    }
-
-    private int indexOf(Person p) {
-//        for (int i = 0; i < count; i++) {
-//            if (persons[i].equals(p)) {
-//                return i;
-//            }
-//        }
-//        return -1;
-        return Arrays.binarySearch(persons, 0, count, p);
     }
 
     @Override
     public boolean remove(int id) {
-        Person tmp = new Person("", 0, id);
-        int indx = indexOf(tmp);
-        if (indx >= 0) {
-            for (; indx < count - 1; indx++) {
-                persons[indx] = persons[indx + 1];
-                personsByName[indx] = personsByName[indx - 1];
-            }
-            persons[count - 1] = null;
-            personsByName[count - 1] = null;
+        if (persons.contains(find(id))) {
+            idList.remove(find(id));
+            ageList.remove(find(id));
+            nameList.remove(find(id));
+            persons.remove(find(id));
             count--;
             return true;
         }
@@ -92,98 +101,58 @@ public class PersonManager implements IManager {
 
     @Override
     public Person find(int id) {
-        Person tmp = new Person("", 0, id);
-        int indx = indexOf(tmp);
-//        if (indx <= 0) {
-//            return null;
-//        }
-//        return persons[indx];
+        Person tmp = new Person("", -123, id);
+        int indx = Collections.binarySearch(persons, tmp);
         if (indx >= 0) {
-            return persons[indx];
+            return persons.get(indx);
         }
         return null;
     }
 
     @Override
-    public Person[] find(int minAge, int maxAge) {
-//        persons = getAllPersonsById();
-//        Person[] res = new Person[10];
-//        if (minAge <= maxAge && minAge > 0 && maxAge > 0) {
-//                int resCount = 0;
-//                for (int i = 0; i < count; i++) {
-//                    if (persons[i].getAge() >= minAge && persons[i].getAge() <= maxAge) {
-//                        resCount++;
-//                    }
-//                }
-//                res = new Person[resCount];
-//                for (int i = 0, j = 0; i < count; i++) { //надо запомнить что так можно писать условия
-//                    if (persons[i].getAge() >= minAge && persons[i].getAge() <= maxAge) {
-//                        res[j] = persons[i];
-//                        j++;
-//                    }
-//                }
-//        }
-//        return res;
+    public Iterable<Person> find(int minAge, int maxAge) {
         if (minAge > maxAge) {
             return null;
         }
-        Comparator<Person> comp = (a, b) -> {
-            int res = Integer.compare(a.getAge(), b.getAge());
-            if (res == 0) {
-                res = Integer.compare(a.getId(), b.getId());
-            }
-            return res;
-        };
-
-        Person[] tmp = Arrays.copyOf(persons, count);
+        Person[] tmp = Arrays.copyOf(ageList.toArray(new Person[0]), count);
         Person p1 = new Person("", minAge, Integer.MIN_VALUE);
         Person p2 = new Person("", maxAge, Integer.MAX_VALUE);
-        Arrays.sort(tmp, comp);
-        int left = -Arrays.binarySearch(tmp, p1, comp) - 1;
-//        int right=-Arrays.binarySearch(tmp,p2,comp)-1;
-        int right = ~Arrays.binarySearch(tmp, p2, comp);
-        return Arrays.copyOfRange(tmp, left, right + 1);
-    }
+//        int left=Arrays.binarySearch(tmp, p1,compByAge);
+        int left = Collections.binarySearch(ageList, p1, compByAge);
+        if (left < 0) {
+            left = ~left;
+        }
+//        int right=Arrays.binarySearch(tmp, p2,compByAge);
+        int right = Collections.binarySearch(ageList, p2, compByAge);
+        if (right < 0) {
+            right = ~right;
+        } else {
+            right++;
+        }
+        tmp = Arrays.copyOfRange(tmp, left, right);
 
-    // оригинальный метод до преобразования в лямбду
-//    @Override
-//    public Person[] getAllPersonsById() {
-//        Arrays.sort(persons, 0, count, new Comparator<Person>() {//создаем анонимный класс через {}
-//            public int compare(Person o1, Person o2) {
-//                return Integer.compare(o1.getId(), o2.getId());
-//            }
-//        });
-//        return persons;
-//    }
+        ArrayList<Person> list = new ArrayList<>(Arrays.asList(tmp));
+        return list;
 
-    @Override
-    public Person[] getAllPersonsById() {
-        //после -> должно быть тело метода в {}, но т.к. тут сразу идет return то можем писать сразу что идет в нём
-//        Arrays.sort(persons, 0, count, (o1, o2) -> {
-//            ;
-//            return Integer.compare(o1.getId(), o2.getId());
-//        });
-        Arrays.copyOf(persons, count);
-        return persons;
     }
 
 
     @Override
-    public Person[] getAllPersonsByAge() {
-//        Arrays.sort(persons, 0, count, (o1, o2) -> Integer.compare(o1.getAge(), o2.getAge()));
-//        Arrays.sort(persons, 0, count, (o1, o2) -> ((Integer) o1.getAge()).compareTo((Integer) o2.getAge()));
-        Person[] res = Arrays.copyOf(persons, count);
-        Arrays.sort(res, (o1, o2) -> Integer.compare(o1.getAge(), o2.getAge()));
-        return res;
+    public Iterable<Person> getAllPersonsById() {
+        Collections.sort(idList, compById);
+        return idList;
     }
 
     @Override
-    public Person[] getAllPersonsByName() {
-//        Arrays.sort(persons, 0, count, (o1, o2) -> o1.getName().compareTo(o2.getName()));
-//        Person[] res = Arrays.copyOf(persons, count);
-//        Arrays.sort(res, (o1, o2) -> o1.getName().compareTo(o2.getName()));
-        return Arrays.copyOf(personsByName,count);
+    public Iterable<Person> getAllPersonsByAge() {
+        Collections.sort(ageList, compByAge);
+        return ageList;
+    }
 
+    @Override
+    public Iterable<Person> getAllPersonsByName() {
+        Collections.sort(nameList, compByName);
+        return nameList;
     }
 
     @Override
@@ -191,17 +160,24 @@ public class PersonManager implements IManager {
         return count;
     }
 
-    public void display() {
-        for (Person p : persons) {
-            if (p != null) {
-                System.out.println(p.toString());
-            }
+    public void displayById() {
+        Person[] tmp = idList.toArray(new Person[count]);
+        for (Person p : tmp) {
+            System.out.println(p);
         }
-//        for (int i = 0; i < persons.length; i++){
-//            if (persons[i] != null) {
-//                System.out.println(persons[i].toString());
-//            }
-//        }
-        System.out.println("----------");
+    }
+
+    public void displayByAge() {
+        Person[] tmp = ageList.toArray(new Person[count]);
+        for (Person p : tmp) {
+            System.out.println(p);
+        }
+    }
+
+    public void displayByName() {
+        Person[] tmp = nameList.toArray(new Person[count]);
+        for (Person p : tmp) {
+            System.out.println(p);
+        }
     }
 }
