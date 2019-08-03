@@ -5,14 +5,14 @@ public class TestPersonManager {
     public static void main(String[] args) {
 
         PersonManager pm = new PersonManager();
-        pm.add(new Person("Sasha", 21, 2));
-        pm.add(new Person("Petya", 25, 3));
-        pm.add(new Person("Vasya", 23, 1));
-        pm.add(new Person("Ira", 27, 4));
-        pm.add(new Person("Anna", 26, 6));
-        pm.add(new Person("Kolya", 29, 5));
-        pm.add(new Person("Maria", 20, 6));
-        pm.add(new Person("Lena", 20, 12));
+        pm.add(new Person(2,"Sasha", 21));
+        pm.add(new Person(3,"Petya", 25));
+        pm.add(new Person(1,"Vasya", 23));
+        pm.add(new Person(4,"Ira", 27));
+        pm.add(new Person(6,"Anna", 26));
+        pm.add(new Person(5,"Kolya", 29));
+        pm.add(new Person(6,"Maria", 20));
+        pm.add(new Person(12,"Lena", 20));
         pm.remove(2);
         pm.displayById();
         System.out.println("---------");
@@ -25,8 +25,7 @@ public class TestPersonManager {
         System.out.println(pm.find(8));
         System.out.println("---------");
 
-//        ArrayList <Person> arr= (ArrayList<Person>) pm.find(22, 27);
-        Iterable<Person>arr=pm.find(23,27);
+        Iterable<Person> arr=  pm.find(23, 27);
         if (arr!=null) {
             for (Person p : arr) {
                 System.out.println(p);

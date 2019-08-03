@@ -18,16 +18,19 @@ public class PersonManager implements IManager {
     private int count = 0;
 
     public PersonManager() {
-        persons = new ArrayList<>(10);
-        idList = new ArrayList<>(10);
-        ageList = new ArrayList<>(10);
-        nameList = new ArrayList<>(10);
+        persons = new ArrayList<>();
+        idList = new ArrayList<>();
+        ageList = new ArrayList<>();
+        nameList = new ArrayList<>();
         compById = (p1, p2) -> {
             int res = Integer.compare(p1.getId(), p2.getId());
             return res;
         };
         compByAge = (p1, p2) -> {
             int res = Integer.compare(p1.getAge(), p2.getAge());
+            if (res == 0) {
+                res = Integer.compare(p1.getId(), p2.getId());
+            }
             return res;
         };
         compByName = (p1, p2) -> {
@@ -49,7 +52,10 @@ public class PersonManager implements IManager {
             return res;
         };
         compByAge = (p1, p2) -> {
-            int res = Integer.compare(p1.getAge(), p2.getAge());
+            int res = p1.getName().compareTo(p2.getName());
+            if (res == 0) {
+                res = Integer.compare(p1.getId(), p2.getId());
+            }
             return res;
         };
         compByName = (p1, p2) -> {
@@ -114,26 +120,26 @@ public class PersonManager implements IManager {
         if (minAge > maxAge) {
             return null;
         }
-        Person[] tmp = Arrays.copyOf(ageList.toArray(new Person[0]), count);
+//        Person[] tmp = Arrays.copyOf(ageList.toArray(new Person[0]), count);
         Person p1 = new Person("", minAge, Integer.MIN_VALUE);
         Person p2 = new Person("", maxAge, Integer.MAX_VALUE);
 //        int left=Arrays.binarySearch(tmp, p1,compByAge);
-        int left = Collections.binarySearch(ageList, p1, compByAge);
-        if (left < 0) {
-            left = ~left;
-        }
+        int left = ~Collections.binarySearch(ageList, p1, compByAge);
+//        if (left < 0) {
+//            left = ~left;
+//        }
 //        int right=Arrays.binarySearch(tmp, p2,compByAge);
-        int right = Collections.binarySearch(ageList, p2, compByAge);
-        if (right < 0) {
-            right = ~right;
-        } else {
-            right++;
-        }
-        tmp = Arrays.copyOfRange(tmp, left, right);
+        int right = ~Collections.binarySearch(ageList, p2, compByAge);
+//        if (right < 0) {
+//            right = ~right;
+//        } else {
+//            right++;
+//        }
+//        tmp = Arrays.copyOfRange(tmp, left, right);
 
-        ArrayList<Person> list = new ArrayList<>(Arrays.asList(tmp));
-        return list;
-
+//        ArrayList<Person> list = new ArrayList<>(Arrays.asList(tmp));
+//        return list;
+         return ageList.subList(left, right);
     }
 
 
