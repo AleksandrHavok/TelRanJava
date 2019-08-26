@@ -178,3 +178,104 @@ sum(`price`) as sumPrice
 from `products`
 group by`manufacture`
 having sumPrice>8000;
+
+drop table products;
+drop table users;
+
+create table if not exists `users`(
+`id` int, 
+`name` varchar(15),
+`email` varchar(30),
+`age` int(3),
+primary key(`id`),
+key users_email_key(`email`)
+);
+
+insert into `users` values
+(1234,'Vasya','vasya@mail.ru',23);
+
+create table `addresses`(
+`id` INT auto_increment,
+`street` varchar(30),
+`house_number` INT(3),
+`apartment_number` varchar (10),
+primary key(`id`)
+);
+
+insert into `addresses` (`street`,
+						 `house_number`,
+						 `apartment_number`)
+values
+('Herzl',10,'12'),
+('Rotshild',100,'2a'),
+('Plaut',10,'102');
+
+insert into `addresses` (`id`,`street`,
+						 `house_number`,
+						 `apartment_number`)
+values
+(1000,'Herzl',10,'12');
+
+insert into `addresses` (`street`,
+						 `house_number`,
+						 `apartment_number`)
+values
+('Herzl',10,'12');
+
+create table if not exists products(
+`id` INT unsigned auto_increment,
+`name` varchar(30) not null default 'NoName',
+`type` varchar(20) not null default 'Unknown',
+`price` Decimal(10,2) not null default 0.00,
+`count` int not null default 0,
+`m_id` INT unsigned,
+primary key(`id`),
+foreign key (`m_id`) references `manufacture`(`id`)
+);
+
+create table `manufacture`(
+`id` int unsigned,
+`name` varchar(30) not null default 'Unknown',
+`country` varchar(30) not null default 'Unknown',
+primary key (id)
+);
+
+insert into `manufacture` values
+(123,'Samsung','Korea'),
+(321,'Apple','USA'),
+(555,'Lenovo','China');
+
+insert into `products` values
+(1,'Galaxy S10','phone',4000.00,10,123),
+(2,'Iplone XS','phone',4000.00,5,321),
+(3,'O-11','phone',2500.00,7,555),
+(4,'Macbook Pro','laptop',12000.00,3,321),
+(5,'I730','laptop',8000.00,4,555),
+(6,'Aspire 5','laptop',8200.00,3,555);
+
+insert into `products` values
+(7,'SuperPhone','phone',10000.00,0,NULL),
+(8,'SuperLaptop','phone',10000.00,0,NULL);
+
+insert into `products` values
+(10,'SuperPhone','phone',10000.00,0,656);
+
+insert into `manufacture` values
+(987,'Xiaomi','China');
+
+select * from `products`,`manufacture`
+where `products`.`m_id`=`manufacture`.`id`;
+
+select * from products p
+join manufacture m on p.m_id=m.id;
+
+select * from products p
+left join manufacture m on p.m_id=m.id;
+
+select * from products p
+right join manufacture m on p.m_id=m.id;
+
+drop table manufacture;
+show index from products;
+show constraint from products;
+alter table products drop foreign key m_id;
