@@ -51,16 +51,16 @@ public class TestArrayList {
         }
         namesList.remove(5);
 
-//        String[] testArray = {
-//                name + 0,
-//                anotherName+4,
-//                name + 1,
-//                name + 2,
-//                name + 3,
-//                thirdName,
-//                thirdName
-//        };
-//        assertEqualsTest(testArray);
+        String[] testArray = {
+                name + 0,
+                anotherName+4,
+                name + 1,
+                name + 2,
+                name + 3,
+                thirdName,
+                thirdName
+        };
+        assertEqualsTest(testArray);
     }
 
     @Test(expected = ConcurrentModificationException.class)
