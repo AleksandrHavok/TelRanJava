@@ -9,14 +9,14 @@ public class SalaryEmployee {
     }
 
     public SalaryEmployee(int id, String name, double salary) {
-        id=id>0?id:-id;
+        id = id > 0 ? id : -id;//проверка на отрицательный id
         this.id = id;
         this.name = name;
         this.salary = salary;
     }
 
     void setId(int id) {
-        id = id > 0 ? id : -id;//проверка на отрицательный id
+        id = id > 0 ? id : -id;
         this.id = id;
     }
 
@@ -37,12 +37,12 @@ public class SalaryEmployee {
     }
 
 
-    double calcSalary(){
+    double calcSalary() {
         return salary;
     }
 
-    public void display(){
-        System.out.println(id+ " name= " + name + " salary= " + salary);
+    public void display() {
+        System.out.println(id + " name= " + name + " salary= " + salary);
     }
 }
 
