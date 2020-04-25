@@ -1,3 +1,4 @@
+
 import java.util.Random;
 
 public class TestOOP {
@@ -10,6 +11,9 @@ public class TestOOP {
          *protected
          */
 
+        MyClass m = new MyClass();
+        System.out.println(m.a(132));
+        System.out.println(m.getA());
         Student s1/*экземпляр класса*/ = new Student("Vasya",23,"01251");//Класс является типом данных. В данном случае ссылочный тип данных
         /*основные признаки ООП:
          *инкапсуляция - все поля класса private и есть методы public которыми можно работать со значениями полей

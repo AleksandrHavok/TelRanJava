@@ -5,7 +5,7 @@ public class MyClass {
             a = 17;
             this.a=18;
         }
-        return 0;
+        return a;
     }
     int getA(){
         int res=this.a(123);
