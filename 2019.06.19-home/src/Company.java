@@ -66,7 +66,6 @@ public class Company {
             if (i == arr.length) {
 //                System.out.println("Array is full, expanding array");
                 Person[] tmp = new Person[arr.length + 1];
-
             }
         } else {
 //            System.out.println("This Employee is not Wage or Salary");
