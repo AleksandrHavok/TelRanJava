@@ -15,7 +15,13 @@ public class TestEmployee {
         Person p2 = new SalaryEmployee("David",36,1900);
         Person[] arr = {p1,p2,we1,se1};
         System.out.println("---------------");
-
+        
+        //Упадем в ClassCastExceeption по причине разницы полей между Person и SalaryEmployee.
+        //Без upcasting и инстанцирования объекта p3 от класса SalaryEmployee здесь не обойтись
+        Person p3 = new Person("Test",999);
+        //SalaryEmployee s1 = (SalaryEmployee) p3;
+        //System.out.println(p3.toString());
+        System.out.println("---------------");
         for (int i=0;i<arr.length;i++){
             System.out.println(arr[i].toString());
         }
@@ -35,6 +41,12 @@ public class TestEmployee {
             // в ответе ничего не получим, т.к. p2 не является объектом типа WageEmployee
             System.out.println(tmp.calcSalary());
         }
+        System.out.println("---------------");
+        //проверка того как работает downcasting
+        System.out.println(p1 instanceof WageEmployee);
+        WageEmployee w1 = (WageEmployee) p1;
+        System.out.println(w1.toString());
+        System.out.println("---------------");
 
         System.out.println("Total salary " + totalSalary(arr));
         System.out.println("Total salary " + totalSalary(null));
