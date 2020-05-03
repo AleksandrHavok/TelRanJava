@@ -15,7 +15,7 @@ public class TestEmployee {
         Person p2 = new SalaryEmployee("David",36,1900);
         Person[] arr = {p1,p2,we1,se1};
         System.out.println("---------------");
-        
+
         //Упадем в ClassCastExceeption по причине разницы полей между Person и SalaryEmployee.
         //Без upcasting и инстанцирования объекта p3 от класса SalaryEmployee здесь не обойтись
         Person p3 = new Person("Test",999);
