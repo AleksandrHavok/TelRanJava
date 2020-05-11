@@ -61,6 +61,7 @@ public class Calculator {
     static String[] calc(String[] args) {
         //валидация массива args
         if (validator(args)) {
+            //расчеты
             while (args.length != 1) {
                 double a = 0, b = 0, tmp = 0;
                 int indx = operationPriority(args);
