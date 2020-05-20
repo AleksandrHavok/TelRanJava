@@ -1,11 +1,11 @@
-public class RageIterator {
+public class RangeIterator {
     private int start;
     private int end;
     private int step;
     private boolean reverse;
 
 
-    public RageIterator(int start,int end,int step,boolean reverse){
+    public RangeIterator(int start,int end,int step,boolean reverse){
         this.start =start;
         this.end=end;
         this.step=step;
