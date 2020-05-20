@@ -77,6 +77,7 @@ public class TestString {
         //разбивает строку на элеменеты массива ориентируюясь на введенную строку.
         str = "Hello, how low?";
         System.out.println(str.split(" ")[0]);
+        System.out.println(str.split(" ")[1]);
         System.out.println(str.split(" ")[2]);
         System.out.println(str.split(",")[1]);
 

@@ -39,7 +39,8 @@ public class ValidationTest {
         if (email.length() - email.lastIndexOf(".") < 2) {
             return false;
         }
-        //проверка на то, что имя почтового сервиса составляет не менее 2х символов, например gmail
+        //проверка на то, что имя почтового сервиса составляет не менее 2х символов,
+        //например gmail
         if (email.lastIndexOf(".") - indx < 2) {
             return false;
         }
