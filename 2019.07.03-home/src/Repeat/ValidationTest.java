@@ -16,8 +16,12 @@ public class ValidationTest {
         if (email == null) {
             return false;
         }
-        //проверка на пробелы в имейле
+        //проверка на пробелы до и после имейла
         if (email.length() != email.trim().length()) {
+            return false;
+        }
+        //проверка на пробел внутри имейла
+        if(email.trim().indexOf(" ")>=0){
             return false;
         }
         //проверка на наличие @
@@ -66,7 +70,7 @@ public class ValidationTest {
             System.out.println("Password is null!");
         }
         else{
-            if (password.contains(" ")) {
+            if (/*(password.length()!=password.trim().length())||*/(password.trim().indexOf(" "))>=0) {
                 checkSpace = true;
             }
             if (password.length() >= 8) {
