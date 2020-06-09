@@ -27,20 +27,23 @@ public class TestSortPerson {
         }
 //        System.out.println(Arrays.toString(arr1));
         //реализуем хреновый компаратор ибо падаем на невыполнении контракта
-        Arrays.sort(arr1, (o1, o2) -> {
-//            @Override
-//            public int compare(Integer o1, Integer o2) {
-//                if (Math.random() > 0.5) {
-//                    return 1;
-//                }
-//                return -1;
-//            }
-            //заменили на лямбда выражение ниже
-            if (Math.random() > 0.5) {
-                return 1;
-            }
-            return -1;
-        });
+        Arrays.sort(arr1, //            @Override
+                //            public int compare(Integer o1, Integer o2) {
+                //                if (Math.random() > 0.5) {
+                //                    return 1;
+                //                }
+                //                return -1;
+                //            }
+                //заменили на лямбда выражение ниже
+                TestSortPerson::compare);
 
 //        System.out.println(Arrays.toString(arr1));
-    }}
+    }
+
+    private static int compare(Integer o1, Integer o2) {
+        if (Math.random() > 0.5) {
+            return 1;
+        }
+        return -1;
+    }
+}
