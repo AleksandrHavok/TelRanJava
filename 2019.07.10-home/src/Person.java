@@ -26,14 +26,14 @@ public class Person implements Comparable<Person> {
     }
 
 
-//    public boolean equals(Person p){
+    //    public boolean equals(Person p){
     @Override
-    public boolean equals(Object p){
-        if (p==null){
+    public boolean equals(Object p) {
+        if (p == null) {
             return false;
         }
-        Person tmp=(Person)p;
-        return id==tmp.getId();
+        Person tmp = (Person) p;
+        return id == tmp.getId();
     }
 
     @Override
