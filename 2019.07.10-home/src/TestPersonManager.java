@@ -7,8 +7,8 @@ public class TestPersonManager {
         pm.add(new Person("Vasya", 23, 1));
         pm.add(new Person("Ira", 27, 4));
         pm.add(new Person("Anna", 26, 6));
-        pm.add(new Person("Kolya", 28, 5));
-        pm.add(new Person("Maria", 20, 6));
+        pm.add(new Person("Kolya", 28, 7));
+        pm.add(new Person("Maria", 20, 5));
         pm.add(new Person("Lena", 20, 12));
         pm.remove(2);
         pm.display();
