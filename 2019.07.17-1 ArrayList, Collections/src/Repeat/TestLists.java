@@ -114,6 +114,7 @@ public class TestLists {
             System.out.println(str);
         }
         */
+
         //Есть стандартный метод для ArrayList для удаления одинаковых элементов
         names.removeIf(str->str.equals("Anna"));
         //распишем лямбду подробнее:
